@@ -1,11 +1,21 @@
-import logo from './logo.svg';
+import React from 'react';
 import './scss/app.scss';
 import Header from './Components/Header';
 import Categories from './Components/Categories';
 import Sort from './Components/Sort';
 import PizzaBlok from './Components/PizzaBlok';
-import pizzazObj from './Assets/pizza.json';
 function App() {
+  const [pizza, setPizaa] = React.useState([]);
+  React.useEffect(() => {
+    fetch('https://641dca320596099ce154a309.mockapi.io/react-pizza')
+      .then((response) => {
+        return response.json();
+      })
+      .then((arr) => {
+        console.log(arr);
+        setPizaa(arr);
+      });
+  }, []);
   return (
     <div className="wrapper">
       <Header />
@@ -17,7 +27,7 @@ function App() {
           </div>
           <h2 className="content__title">Все пиццы</h2>
           <div className="content__items">
-            {pizzazObj.map((obj) => (
+            {pizza.map((obj) => (
               <div key={obj.id}>
                 <PizzaBlok
                   prise={obj.price}

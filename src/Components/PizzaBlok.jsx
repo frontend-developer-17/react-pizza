@@ -1,5 +1,6 @@
 import React from 'react';
 export default function PizzaBlok({ prise, imageUrl, title, sizes, types }) {
+  debugger;
   const [currentNumber, setcurrentNumber] = React.useState(0);
   const NamePizza = ['тонкое', 'традиционное'];
 
