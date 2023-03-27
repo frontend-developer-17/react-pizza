@@ -1,13 +1,20 @@
 import React from 'react';
 
-export default function Sort() {
+export default function Sort({ activeSort, setActiveSort }) {
   const [open, setOpen] = React.useState(false);
-  const [activeCategor, setctiveCategor] = React.useState(0);
-  const sortName = ['популярности', 'цене', 'алфавиту'];
+  const sortName = [
+    { name: 'популярности(↑)', sort: 'rating' },
+    { name: 'популярности(↓)', sort: '-rating' },
+    { name: 'цене(↑)', sort: 'price' },
+    { name: 'цене(↓)', sort: '-price' },
+    { name: 'алфавиту(↑)', sort: 'title' },
+    { name: 'алфавиту(↓)', sort: '-title' },
+  ];
   const currentCategories = (i) => {
-    setctiveCategor(i);
+    setActiveSort(i);
     setOpen(false);
   };
+
   return (
     <div>
       <div className="sort">
@@ -24,17 +31,17 @@ export default function Sort() {
             />
           </svg>
           <b>Сортировка по:</b>
-          <span onClick={() => setOpen(!open)}>{sortName[activeCategor]}</span>
+          <span onClick={() => setOpen(!open)}> {activeSort.name}</span>
         </div>
         {open && (
           <div className="sort__popup">
             <ul>
-              {sortName.map((name, i) => (
+              {sortName.map((obj, i) => (
                 <li
-                  onClick={() => currentCategories(i)}
-                  className={activeCategor === i ? 'active' : ''}
+                  onClick={() => currentCategories(obj)}
+                  className={activeSort.sort === obj.sort ? 'active' : ''}
                   key={i}>
-                  {name}
+                  {obj.name}
                 </li>
               ))}
             </ul>

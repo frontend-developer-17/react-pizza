@@ -4,7 +4,7 @@ import imageBasket from '../../Assets/img/empty-cart.png';
 export default function Basket() {
   return (
     <div className={style.basketBlok}>
-      <h2>😐Корзина пустая!</h2>
+      <h2>😕Корзина пустая!</h2>
       <img src={imageBasket} alt="" srcset="" />
     </div>
   );

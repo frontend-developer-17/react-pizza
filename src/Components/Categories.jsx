@@ -1,7 +1,6 @@
 import React from 'react';
 
-export default function Categories() {
-  const [activeCategor, setActiveCategor] = React.useState(0);
+export default function Categories({ activeCategor, setActiveCategor }) {
   const categoriesName = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
   return (
     <div>

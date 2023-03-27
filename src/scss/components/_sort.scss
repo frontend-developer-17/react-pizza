@@ -5,6 +5,14 @@
   &__label {
     display: flex;
     align-items: center;
+   margin-right: 10px;
+   @media(max-width:1170px){
+    display: flex;
+     align-items: center;
+     justify-content: center;
+     margin-top: 20px;
+   }
+
 
     svg {
       margin-right: 8px;
@@ -12,6 +20,14 @@
 
     b {
       margin-right: 8px;
+      @media(max-width:1300px){
+       display: none;
+       }
+       @media(max-width:1170px){
+       display: flex;
+        align-items: center;
+      }
+      
     }
 
     span {
@@ -30,8 +46,9 @@
     border-radius: 10px;
     overflow: hidden;
     padding: 10px 0;
-    width: 160px;
-
+    width: 200px;
+    
+   
     ul {
       overflow: hidden;
       li {

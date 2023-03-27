@@ -14,6 +14,8 @@ function App() {
       <div className="content">
         <div className="container">
           <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/react-pizza/" element={<Home />} />
             <Route path="/home/" element={<Home />} />
             <Route path="/basket/" element={<Basket />} />
 

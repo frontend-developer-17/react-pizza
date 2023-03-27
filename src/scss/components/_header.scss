@@ -2,14 +2,24 @@
 
 .header {
   border-bottom: 1px solid $gray-line;
-  padding: 40px 0;
+  padding: 30px 0;
 
   .container {
     display: flex;
     align-items: center;
     justify-content: space-between;
+   
+    @media(max-width:635px){
+  flex-direction: column;
+      
+    }
   }
-
+&__cart{
+ margin: 10px 0 0 3px;
+ @media(max-width:637px){
+ 
+ }
+}
   &__logo {
     display: flex;
 

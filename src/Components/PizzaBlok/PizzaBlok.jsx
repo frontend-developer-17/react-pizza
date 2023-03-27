@@ -7,7 +7,7 @@ export default function PizzaBlok({ prise, imageUrl, title, sizes, types }) {
   const [activeSize, setactiveSize] = React.useState(0);
 
   return (
-    <div>
+    <div  className="pizza-block-wrapper" >
       <div className="pizza-block">
         <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
         <h4 className="pizza-block__title">{title}</h4>
