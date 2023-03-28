@@ -1,8 +1,9 @@
 import React from 'react';
 import image from '../Assets/img/pizza-logo.svg';
 import { Link } from 'react-router-dom';
+import Searsh from './Searsh/Searsh';
 
-export default function Header() {
+export default function Header({search,setSearch}) {
   return (
     <div>
       <div className="header">
@@ -16,6 +17,7 @@ export default function Header() {
               </div>
             </div>
           </Link>
+          <Searsh  search={search} setSearch={setSearch} />
           <div className="header__cart">
             <Link to="/basket" className="button button--cart">
               <span>520 ₽</span>

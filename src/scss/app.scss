@@ -152,7 +152,9 @@ body {
       }
     }
   }
-
+.content__items{
+  display: block;
+}
   &__item {
     display: flex;
     width: 100%;
@@ -198,13 +200,16 @@ body {
       width: 13%;
 
       &-minus {
+       margin: 20px;
         svg {
           path:first-of-type {
             display: none;
           }
         }
       }
-
+      &-plus{
+        margin: 20px;
+      }
       b {
         font-size: 22px;
       }
@@ -215,6 +220,7 @@ body {
       align-items: center;
       justify-content: center;
       width: 33%;
+    
 
       b {
         font-weight: bold;
@@ -242,6 +248,7 @@ body {
       }
 
       .button {
+       
         svg {
           width: 11.5px;
           height: 11.5px;
