@@ -2,8 +2,11 @@ import React from 'react';
 import image from '../Assets/img/pizza-logo.svg';
 import { Link } from 'react-router-dom';
 import Searsh from './Searsh/Searsh';
+import { useSelector } from 'react-redux';
 
-export default function Header({search,setSearch}) {
+export default function Header() {
+  const { totalPrise, items } = useSelector((state) => state.basketSlise);
+
   return (
     <div>
       <div className="header">
@@ -17,10 +20,10 @@ export default function Header({search,setSearch}) {
               </div>
             </div>
           </Link>
-          <Searsh  search={search} setSearch={setSearch} />
+          <Searsh />
           <div className="header__cart">
             <Link to="/basket" className="button button--cart">
-              <span>520 ₽</span>
+              <span>{totalPrise} ₽</span>
               <div className="button__delimiter"></div>
               <svg
                 width="18"
@@ -50,7 +53,7 @@ export default function Header({search,setSearch}) {
                   strokeLinejoin="round"
                 />
               </svg>
-              <span>3</span>
+              <span>{items.length}</span>
             </Link>
           </div>
         </div>

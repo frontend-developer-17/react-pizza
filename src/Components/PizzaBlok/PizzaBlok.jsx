@@ -1,13 +1,29 @@
 import React from 'react';
-export default function PizzaBlok({ prise, imageUrl, title, sizes, types }) {
+import { useDispatch } from 'react-redux';
+import { addItems } from '../../Redux/BasketSlise';
+export default function PizzaBlok({ id, prise, imageUrl, title, sizes, types }) {
   const [currentNumber, setcurrentNumber] = React.useState(0);
   const NamePizza = ['тонкое', 'традиционное'];
 
   const [activeType, setActiveType] = React.useState(0);
   const [activeSize, setactiveSize] = React.useState(0);
+  const dispatch = useDispatch();
+
+  const addItemsOnBasket = () => {
+    const items = {
+      imageUrl,
+      title,
+      prise,
+      size: sizes[activeSize],
+      type: NamePizza[activeType],
+      id,
+    };
+
+    dispatch(addItems(items));
+  };
 
   return (
-    <div  className="pizza-block-wrapper" >
+    <div className="pizza-block-wrapper">
       <div className="pizza-block">
         <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
         <h4 className="pizza-block__title">{title}</h4>
@@ -34,7 +50,7 @@ export default function PizzaBlok({ prise, imageUrl, title, sizes, types }) {
             ))}
           </ul>
         </div>
-        <div className="pizza-block__bottom">
+        <div onClick={addItemsOnBasket} className="pizza-block__bottom">
           <div className="pizza-block__price">
             <span>от {prise} ₽ </span>
           </div>

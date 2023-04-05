@@ -1,28 +1,40 @@
 .root{
     position: relative;
+  margin-right: auto;
+  margin-left: 15px;
+  @media(max-width:635px){
+    margin-left: 18vw;
+    }
+  
+
 }
 .input{
     border: 1px solid rgba(0,0,0,0.5);
     width: 300px;
    font-size: 16px;
     border-radius: 10px;
-    padding: 12px 20px;
+    padding: 10px 20px;
     padding-left: 35px;
+    margin: 6px 10px 0 0  ;
    
-    
-
+    @media(max-width:878px){
+        width:180px ;
+       align-items: center;
+      }
+   
+     
 }
 .icons{
     position: absolute;
     left: 10px;
-    top: 13px;
+    top: 17px;
     width: 20px;
   
 }
 .close{
     position: absolute;
-    left: 255px;
-    top: 10px;
+    right: 15px;
+    top:13px;
     opacity: 0.3;
     height: 28px;
 

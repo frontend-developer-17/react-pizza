@@ -17,6 +17,9 @@ body {
   margin: 50px auto;
   border-radius: 10px;
   max-width: 1400px;
+  @media(max-width:454px){
+    width: 90vw;
+  }
 }
 
 .content {
@@ -31,7 +34,7 @@ body {
     align-items: center;
     justify-content: center;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(3, 1fr);
+    grid-template-rows: repeat(1, 1fr);
     gap: 0px 0px;
 
     @media(max-width: 1405px) {

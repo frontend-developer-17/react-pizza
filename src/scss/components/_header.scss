@@ -8,16 +8,22 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-   
+   a{
+    @media(max-width:400px){
+      margin-left: 30px;
+          
+        }
+   }
     @media(max-width:635px){
   flex-direction: column;
       
     }
   }
 &__cart{
- margin: 10px 0 0 3px;
- @media(max-width:637px){
- 
+ margin: 10px 15px 0 0;
+ a{
+  font-size: 8px;
+  width: 170px;
  }
 }
   &__logo {

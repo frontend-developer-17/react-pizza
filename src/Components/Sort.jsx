@@ -1,23 +1,30 @@
 import React from 'react';
-
-export default function Sort({ activeSort, setActiveSort }) {
+import { useSelector, useDispatch } from 'react-redux';
+import { setCurrentSort } from '../Redux/SortSlise';
+export default function Sort({ activeSort, setActiveSort, dispatch }) {
   const [open, setOpen] = React.useState(false);
-  const sortName = [
-    { name: 'популярности(↑)', sort: 'rating' },
-    { name: 'популярности(↓)', sort: '-rating' },
-    { name: 'цене(↑)', sort: 'price' },
-    { name: 'цене(↓)', sort: '-price' },
-    { name: 'алфавиту(↑)', sort: 'title' },
-    { name: 'алфавиту(↓)', sort: '-title' },
-  ];
+  const bodiRef = React.useRef();
+  const sort = useSelector((state) => state.sortSlice.sort);
   const currentCategories = (i) => {
-    setActiveSort(i);
+    dispatch(setCurrentSort(i));
     setOpen(false);
   };
+  React.useEffect(() => {
+    const handleOnChange = (event) => {
+      if (!event.composedPath().includes(bodiRef.current)) {
+        setOpen(false);
+      
+      }
+    };
+    document.body.addEventListener('click', handleOnChange);
+    return () => {
+      document.body.removeEventListener('click', handleOnChange);
+    };
+  }, []);
 
   return (
     <div>
-      <div className="sort">
+      <div className="sort" ref={bodiRef}>
         <div className="sort__label">
           <svg
             width="10"
@@ -36,7 +43,7 @@ export default function Sort({ activeSort, setActiveSort }) {
         {open && (
           <div className="sort__popup">
             <ul>
-              {sortName.map((obj, i) => (
+              {sort.map((obj, i) => (
                 <li
                   onClick={() => currentCategories(obj)}
                   className={activeSort.sort === obj.sort ? 'active' : ''}

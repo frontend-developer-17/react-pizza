@@ -1,0 +1,32 @@
+.root{
+    display: flex;
+  
+    li{
+        border: 1px solid red;
+        height: 33px;
+        width: 31px;
+        padding: 5px 10px;
+        border-radius: 20px;
+        margin: 0 3px;
+        background-color: rgba(247, 247, 243, 0.644);
+       
+
+        a{
+            color: rgb(42, 98, 136);
+          
+        }
+        
+    }
+    li:hover{
+        border: 1px solid rgb(46, 39, 148);
+        cursor: pointer;
+        color: rgb(197, 151, 52);
+        background-color: rgba(243, 13, 13, 0.075);
+    }
+
+    .selected{
+        background-color: rgb(245, 19, 177);
+    }
+  
+   
+}
