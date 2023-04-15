@@ -1,10 +1,11 @@
 import React from 'react';
 import NotFoundBlok from '../Components/NotFoundBlok/NotFoundBlok';
 
-export default function NotFound() {
+const  NotFound = () =>{
   return (
     <div>
 <NotFoundBlok/>
     </div>
   );
 }
+export default NotFound

@@ -1,6 +1,14 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
+export type ActiveSorting={
+  name: string, sort: string
+}
+
+interface Sort{
+  activeSort:ActiveSorting
+  sort:ActiveSorting[]
+}
+const initialState:Sort = {
   activeSort: { name: 'популярности(↑)', sort: 'rating' },
   sort: [
     { name: 'популярности(↑)', sort: 'rating' },
@@ -9,6 +17,7 @@ const initialState = {
     { name: 'цене(↓)', sort: '-price' },
     { name: 'алфавиту(↑)', sort: 'title' },
     { name: 'алфавиту(↓)', sort: '-title' },
+    { name: 'алфавиту(↓)', sort: '-title' },
   ],
 };
 
@@ -16,11 +25,12 @@ export const sortSlice = createSlice({
   name: 'CategoriSlice',
   initialState,
   reducers: {
-    setCurrentSort(state, action) {
+    setCurrentSort(state, action:PayloadAction<ActiveSorting>) {
       state.activeSort = action.payload;
     },
-    urlSort: (state, action) => {
-      state.activeSort = action.payload.sorting;
+    urlSort: (state, action:PayloadAction<ActiveSorting>) => {
+     
+      state.activeSort = action.payload
     },
   },
 });

@@ -1,31 +1,45 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { addItems } from '../../Redux/BasketSlise';
-export default function PizzaBlok({ id, prise, imageUrl, title, sizes, types }) {
+import { useDispatch, useSelector } from 'react-redux';
+import {  addItems } from '../../Redux/Slise/BasketSlise';
+import { Link } from 'react-router-dom';
+import { RootState } from '../../Redux/store';
+import { ItemsPizza } from '../../@types/types';
+
+type PizzaBlokProps = {
+  id:string, prise:string, imageUrl:string, title:string, sizes:number[], types:number[]
+}
+const PizzaBlok:React.FC<PizzaBlokProps> =({ id, prise, imageUrl, title, sizes, types }) => {
   const [currentNumber, setcurrentNumber] = React.useState(0);
   const NamePizza = ['тонкое', 'традиционное'];
 
   const [activeType, setActiveType] = React.useState(0);
   const [activeSize, setactiveSize] = React.useState(0);
   const dispatch = useDispatch();
-
+const count = useSelector((state:RootState) => state.basketSlise.items.find((obj) => obj.id === id));
+ 
+  const addedCount = count ? count.count : 0;
   const addItemsOnBasket = () => {
-    const items = {
+    const items:ItemsPizza = {
       imageUrl,
       title,
-      prise,
+      prise:Number(prise),
       size: sizes[activeSize],
       type: NamePizza[activeType],
       id,
+      count:0,
+      itemPrise:0
     };
-
+   
     dispatch(addItems(items));
+
   };
 
   return (
     <div className="pizza-block-wrapper">
       <div className="pizza-block">
-        <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
+        <Link to={`/home/` + id}>
+          <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
+        </Link>
         <h4 className="pizza-block__title">{title}</h4>
         <div className="pizza-block__selector">
           <ul>
@@ -69,10 +83,11 @@ export default function PizzaBlok({ id, prise, imageUrl, title, sizes, types }) 
               />
             </svg>
             <span>Добавить</span>
-            <i>{currentNumber}</i>
+            {addedCount ? <i>{addedCount}</i> : ''}
           </button>
         </div>
       </div>
     </div>
   );
 }
+export default PizzaBlok

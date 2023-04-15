@@ -4,16 +4,17 @@ import { SearchContext } from './../../App';
 import debounce from 'lodash.debounce';
 
 export default function Searsh() {
-  const { search, setSearch } = React.useContext(SearchContext);
-  const [value, setValue] = React.useState();
-  const inputRef = React.useRef();
+
+  const { search, setSearch } = React.useContext(SearchContext) as SearchContext;
+  const [value, setValue] = React.useState<string>();
+  const inputRef = React.useRef<HTMLInputElement>(null);
   const testDebounce = React.useCallback(
-    debounce((e) => {
+    debounce((e:React.ChangeEvent<HTMLInputElement>) => {
       setSearch(e.target.value);
     }, 800),
     [],
   );
-  const currentSearch = (e) => {
+  const currentSearch = (e:React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
     testDebounce(e);
   };
@@ -21,7 +22,7 @@ export default function Searsh() {
   const closeSearch = () => {
     setSearch('');
     setValue('');
-    inputRef.current.focus();
+    inputRef.current?.focus();
   };
   return (
     <div className={style.root}>

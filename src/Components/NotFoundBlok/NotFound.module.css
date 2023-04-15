@@ -1,5 +1,8 @@
 .notFoundBlok{
-    max-width: 600px;
+ display: flex;
+ justify-content: center;
+ flex-direction: column;
     margin: 0 auto;
-   
+   align-items: center;
+   text-align: center;
 }

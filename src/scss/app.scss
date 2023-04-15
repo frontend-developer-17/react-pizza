@@ -28,7 +28,17 @@ body {
   &__title {
     margin: 35px 0;
   }
+  .content__error{
+  color: #b6b6b6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    h4{
+      padding-left: 10px;
 
+    }
+  }
   &__items {
     display: grid;
     align-items: center;
@@ -94,7 +104,10 @@ body {
 
     .content__title {
       margin: 0;
+     
+
     }
+   
   }
 }
 
@@ -208,6 +221,12 @@ body {
           path:first-of-type {
             display: none;
           }
+        }
+        &-disabled{
+          background-color: rgb(248, 244, 244);
+          opacity: 0.5;
+       transform: none;
+      
         }
       }
       &-plus{

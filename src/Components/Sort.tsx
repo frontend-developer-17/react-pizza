@@ -1,24 +1,38 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentSort } from '../Redux/SortSlise';
-export default function Sort({ activeSort, setActiveSort, dispatch }) {
+import { useDispatch, useSelector } from 'react-redux';
+import { ActiveSorting, setCurrentSort } from '../Redux/Slise/SortSlise';
+import { RootState } from '../Redux/store';
+
+type SortProps={
+  activeSort:{name:string, sort:string},  
+  
+  
+}
+
+
+const Sort:React.FC<SortProps> = React.memo(({ activeSort  })=> {
+  console.log("Sort");
+  
+  const dispatch = useDispatch()
+  const sort = useSelector((state:RootState) => state.sortSlice.sort);
+
   const [open, setOpen] = React.useState(false);
-  const bodiRef = React.useRef();
-  const sort = useSelector((state) => state.sortSlice.sort);
-  const currentCategories = (i) => {
-    dispatch(setCurrentSort(i));
+  const bodiRef = React.useRef<HTMLDivElement>(null);
+  const currentCategories = (obj:ActiveSorting) => {
+    dispatch(setCurrentSort(obj));
+   
     setOpen(false);
   };
   React.useEffect(() => {
-    const handleOnChange = (event) => {
-      if (!event.composedPath().includes(bodiRef.current)) {
+    const handleClik = (event:MouseEvent) => {
+      if (bodiRef.current&&!event.composedPath().includes(bodiRef.current)) {
         setOpen(false);
       
       }
     };
-    document.body.addEventListener('click', handleOnChange);
+    document.body.addEventListener('click', handleClik);
     return () => {
-      document.body.removeEventListener('click', handleOnChange);
+      document.body.removeEventListener('click', handleClik);
     };
   }, []);
 
@@ -43,12 +57,13 @@ export default function Sort({ activeSort, setActiveSort, dispatch }) {
         {open && (
           <div className="sort__popup">
             <ul>
-              {sort.map((obj, i) => (
+              {sort.map((obj, i:number) => (
                 <li
                   onClick={() => currentCategories(obj)}
                   className={activeSort.sort === obj.sort ? 'active' : ''}
                   key={i}>
                   {obj.name}
+                 
                 </li>
               ))}
             </ul>
@@ -57,4 +72,5 @@ export default function Sort({ activeSort, setActiveSort, dispatch }) {
       </div>
     </div>
   );
-}
+})
+export default Sort

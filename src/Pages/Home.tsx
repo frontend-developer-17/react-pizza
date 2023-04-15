@@ -1,61 +1,61 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Categories from '../Components/Categories';
 import Sort from '../Components/Sort';
 import PizzaBlok from '../Components/PizzaBlok/PizzaBlok';
 import Skeleton from '../Components/PizzaBlok/Skeleton';
 import Paginate from '../Components/Paginate/Paginate';
-import { SearchContext } from './../App';
-import { useSelector, useDispatch } from 'react-redux';
-import axios from 'axios';
+import { SearchContext } from '../App';
+import { useSelector } from 'react-redux';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
-import { urlCategori } from '../Redux/CategoriSlise';
-import { urlSort } from '../Redux/SortSlise';
+import { urlCategori } from '../Redux/Slise/CategoriSlise';
+import { ActiveSorting, urlSort } from '../Redux/Slise/SortSlise';
 import { useRef } from 'react';
-//import { urlSort } from '../Redux/SortSlise';
+import { RootState, useAppDispatch } from '../Redux/store';
+import { ParamsObj, fetchPizza } from '../Redux/AsynsAction/FetchPizzaThunk';
 
-export default function Home() {
-  const { search } = React.useContext(SearchContext);
+const Home:React.FC = () => {
+  const { search } = React.useContext(SearchContext) as SearchContext;
   const navigate = useNavigate();
-  const [pizza, setPizaa] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(true);
   const [currentPage, setcurrentPage] = React.useState(1);
   const isSearch = useRef(false);
   const isMoundet = useRef(false);
   const sceleton = [...new Array(8)].map((_, index) => <Skeleton key={index} />);
+  const activeCategor = useSelector((state:RootState) => state.categoriSlice.categori);
+  const pizza = useSelector((state:RootState) => state.pizzaSlice.items);
+  const activeSort = useSelector((state:RootState) => state.sortSlice.activeSort);
+  const status = useSelector((state:RootState) => state.pizzaSlice.status);
+  const sort = useSelector((state:RootState) => state.sortSlice.sort);
 
-  const activeCategor = useSelector((state) => state.categoriSlice.categori);
-  const activeSort = useSelector((state) => state.sortSlice.activeSort);
-  const sort = useSelector((state) => state.sortSlice.sort);
-
-  const dispatch = useDispatch();
-  const fetchPizzaz = () => {
-    setIsLoading(true);
+  const dispatch = useAppDispatch();
+  const getPizzaz =  () => {
     const order = activeSort.sort.includes('-') ? 'asc' : 'desc';
     const sort = activeSort.sort.replace('-', '');
     const categori = activeCategor > 0 ? activeCategor : '';
-    axios
-      .get(
-        `https://641dca320596099ce154a309.mockapi.io/react-pizza?category=${categori}&order=${order}&sortBy=${sort}&page=${currentPage}&limit=4`,
-      )
-      .then((response) => {
-        setPizaa(response.data);
-        setIsLoading(false);
-      });
+    
+    try {
+       dispatch(fetchPizza({ order, sort, categori, currentPage } as ParamsObj));
+    } catch (error) {
+      console.log(error);
+    }
   };
   React.useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1));
-      console.log(params);
-      const sorting = sort.find((obj) => obj.sort === params.activeSort);
-      dispatch(urlCategori({ ...params }));
-      dispatch(urlSort({ sorting }));
+
+      const sorting = sort.find((obj:ActiveSorting) => obj.sort === params.activeSort);
+      dispatch(urlCategori(Number(params.activeCategor) ));
+     if (sorting) {
+      dispatch(urlSort({ ... sorting }));
+     }
+     
+
       isSearch.current = true;
     }
   }, []);
 
   React.useEffect(() => {
-    fetchPizzaz();
+    getPizzaz();
   }, [activeCategor, activeSort.sort, currentPage]);
 
   React.useEffect(() => {
@@ -79,12 +79,17 @@ export default function Home() {
     .map((obj) => (
       <div key={obj.id}>
         <PizzaBlok
+        
           id={obj.id}
           prise={obj.price}
           imageUrl={obj.imageUrl}
           title={obj.title}
           sizes={obj.sizes}
           types={obj.types}
+          
+         
+         
+        
         />
       </div>
     ));
@@ -92,11 +97,21 @@ export default function Home() {
     <div className="container">
       <div className="content__top">
         <Categories setcurrentPage={setcurrentPage} activeCategor={activeCategor} />
-        <Sort activeSort={activeSort} dispatch={dispatch} />
+        <Sort activeSort={activeSort}  />
       </div>
       <h2 className="content__title">Все пиццы</h2>
-      <div className="content__items">{isLoading ? sceleton : <>{pizzaz}</>}</div>
-      <Paginate setcurrentPage={setcurrentPage} />
+      {status === 'error' ? (
+        <div className="content__error">
+          <h3>😕Произошла ошибка!</h3>
+          <h4>Попробуйте позже.</h4>
+        </div>
+      ) : (
+        <div>
+          <div className="content__items">{status === 'loading' ? sceleton : <>{pizzaz}</>}</div>
+          <Paginate setcurrentPage={setcurrentPage} />
+        </div>
+      )}
     </div>
   );
 }
+export default Home
