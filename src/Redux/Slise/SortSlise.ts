@@ -17,7 +17,7 @@ const initialState:Sort = {
     { name: 'цене(↓)', sort: '-price' },
     { name: 'алфавиту(↑)', sort: 'title' },
     { name: 'алфавиту(↓)', sort: '-title' },
-    { name: 'алфавиту(↓)', sort: '-title' },
+   
   ],
 };
 
